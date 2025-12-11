@@ -95,7 +95,8 @@ ps aux | grep apache
 
 ### Find 
 
-rechercher un/des fichier(s) par nom :
+rechercher un/des fichier(s) par nom (ici je redirige les erreurs dans /dev/null 
+-permet de ne pas les afficher dans le terminal-) :
 ```bash
 find / -name "passwd" 2> /dev/null
 ```
