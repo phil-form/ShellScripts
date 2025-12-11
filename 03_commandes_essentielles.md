@@ -248,3 +248,20 @@ Extraire dans un dossier cible :
 ```shell
 tar -xzvf backup.tar.gz -C /dossier_cible
 ```
+
+Créer une tarball avec find : 
+```shell
+find . -type f -name "*.md" -print0 | tar --null -czvf mdbackups.tar.gz --file-from=-  
+```
+```txt
+find : 
+-type f => chercher un fichier
+-name "*.md" => dont le nom fini par .md
+-print0 => séparé chaque fichier trouvé par find par un \0
+
+tar :
+--null => préciser la séparation par des \0 (sortie de la commande précédente)
+-czvf mdbackups.tar.gz => créer une archive compressée des fichiers trouvé avec find
+--file-from=- => précise que les fichiers proviennent la l'entrée standard (-), donc
+                 de la sortie de la commande find 
+```
