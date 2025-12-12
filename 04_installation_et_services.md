@@ -112,6 +112,16 @@ sudo systemctl start service_name
 sudo systemctl stop service_name
 ```
 
+#### Redémarrer un service
+```shell
+sudo systemctl restart service_name
+```
+
+#### Recharger un service (mettre à jour ses configurations)
+```shell
+sudo systemctl reload service_name
+```
+
 #### Inspecter l'état actuel d'un service
 ```shell
 sudo systemctl status service_name
@@ -139,7 +149,7 @@ systemctl list-units --type=service --state=failed
 
 Il faudra créer un fichier pour ce service (habituellement appellé nom_du_service.service)
 
-Ce fichier doit être créer dans "/etc/systemd/system/servicename.service"
+Ce fichier doit être créer dans "/etc/systemd/system/SERVICENAME.service"
 ```txt
 [Unit]
 Description=Example de service
@@ -158,7 +168,9 @@ RequiredBy=multi-user.target
 
 Remplacer SERVICE_USERNAME par le username de l'utilisateur à qui le service sera lié
 
-Remplacer SERVICE_COMMAND par la commande lancé lar le service 
+Remplacer SERVICE_COMMAND par la commande lancé lar le service !!! Toujours mettre le chemin absolu des commandes 
+et des fichiers utilisé. Il faut aussi faire attention à ce que l'uitilisateur du service, ai le droit 
+d'executer cette commande.
 
 Les targets disponibles :
 | systemd targets     | SystemV runlevel | target aliases       | Description |
