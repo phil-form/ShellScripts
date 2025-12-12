@@ -289,6 +289,9 @@ Il se trouve dans /etc/crontab
 Celui-ci à un champ supplémentaire qui est l'utilisateur qui sera utilisé pour lancer le cron.
 
 ```shell
+sudo journalctl -t cron
+```
+```shell
 cat /etc/crontab
 ```
 ```terminaloutput
