@@ -91,7 +91,7 @@ EXAMPLE=`date`
 
 # j'utilise read pour lire ce que m'entrera l'utilisateur lors de l'exécution
 # Le contenu entré sera mis dans la variable NAME
-read "Entrez votre nom : " NAME
+read -p "Entrez votre nom : " NAME
 
 echo "Votre nom est : $NAME"
 ```

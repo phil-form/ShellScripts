@@ -211,6 +211,18 @@ RequiredBy=multi-user.target
 
 Après il faut activer le service et le démarrer.
 
+### Journald
+
+JournalD est l'outils de journalisation de linux sous systemd, son utilisation est relativement simple : 
+```shell
+journalctl -t service_name
+```
+
+exemple :
+```shell
+journalctl -t apache2
+```
+
 ### CRON
 
 Cron permet de lancer des tâches automatiquement à des moments précis
