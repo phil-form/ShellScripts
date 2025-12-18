@@ -36,6 +36,7 @@ On peut avoir plusieurs arguments :
 | -ge       | Plus grand ou égale                                                |
 | -le       | Plus petit ou égale                                                |
 | -n        | Permet de vérifier si un variable n'est pas vide                   |
+| =~        | Comparaison avec expression régulière                              |
 
 
 Exemples : 
@@ -66,6 +67,40 @@ read "Entrez votre nom : " NAME
 
 if ["$NAME" = "Philippe"]; then
     echo "Bonjour Admin"
+fi
+```
+
+#### Else/Elif
+
+```shell
+read "confirm drop database (y/n) : " DROP_DB
+
+# Ici j'utilise le =~ pour faire une comparaison avec des expressions régulières
+if [ "$DROP_DB" =~ ^[Yy]$ ]; 
+then
+  echo "Dropping DB"
+  # commandes de drop 
+  exit 0
+else
+  # Le code du else ne s'exécutera uniquement si la condition du IF est fausse.
+  echo "Exit!"
+  exit 1
+fi
+```
+
+```shell
+
+# Le code qui suit est exécuter dans tous les cas.
+DB_USER=$(echo "Une commande qui retournerais les utilisateurs de la DB en filtrant sur le nom d'utilisateur")
+
+if ![ -n "$DB_USER" ];
+then
+  echo "Creete USER"
+# Le elif me permet de rajouter un else avec une condition supplémentaire
+# Le elif et le else sont optionel
+elif ![ -n "$PASSWORD" ];
+then 
+  echo "update user password"
 fi
 ```
 
