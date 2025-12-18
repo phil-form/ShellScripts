@@ -137,7 +137,7 @@ sortie :
 -rw-r--r-- 1 rmdir  staff    86B Dec 11 11:40 ./04_installation_et_services.md
 -rw-r--r-- 1 rmdir  staff    12B Dec 10 10:39 ./readme.md
 -rw-r--r-- 1 rmdir  staff   2.3K Dec 11 11:24 ./02.1_user_management.md
--rw-r--r-- 1 rmdir  staff     0B Dec 10 15:32 ./08_bash_config.md
+-rw-r--r-- 1 rmdir  staff     0B Dec 10 15:32 ./08_shell_config.md
 -rw-r--r-- 1 rmdir  staff   2.8K Dec 11 13:28 ./03_commandes_essentielles.md
 ```
 
