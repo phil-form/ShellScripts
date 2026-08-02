@@ -204,14 +204,6 @@ chmod u-s file.sh
 chmod g-s file.sh
 ```
 
-> [!CAUTION]
-> Un binaire SUID appartenant à `root` s'exécute **en root**, quel que soit l'utilisateur qui le lance. C'est un vecteur d'élévation de privilèges classique.
-> Ne posez jamais un SUID sur un script, et auditez régulièrement ceux présents sur la machine :
->
-> ```bash
-> find / -perm -4000 -type f 2>/dev/null
-> ```
-
 ### SGID sur un dossier
 
 Sur un **dossier**, `g+s` a un autre effet, très utile pour un espace de travail partagé : tout fichier créé à l'intérieur hérite automatiquement du **groupe du dossier** au lieu du groupe de son créateur.

@@ -1,0 +1,11 @@
+{
+  "name": "stack-api",
+  "version": "1.0.0",
+  "description": "API de la stack de démonstration du chapitre 07",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js"
+  },
+  "license": "MIT"
+}

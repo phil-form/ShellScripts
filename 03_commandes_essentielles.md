@@ -40,9 +40,11 @@ tree
 │   ├── 04_gestion_des_erreurs
 │   ├── 05_Arguments
 │   └── 06_fonctions
-├── 07_tmux.md
-├── 08_shell_config.md
-├── 09_advanced_config.md
+├── 07_docker.md
+├── 08_docker_administration.md
+├── 09_tmux.md
+├── 10_shell_config.md
+├── 11_advanced_config.md
 ├── exemple
 │   ├── errors.txt
 │   ├── exemple.txt
@@ -188,17 +190,17 @@ find . -type f -name "*.md" -exec ls -lh {} \;
 Sortie :
 
 ```text
--rw-r--r-- 1 rmdir  staff     0B Dec 10 15:32 ./07_tmux.md
+-rw-r--r-- 1 rmdir  staff     0B Dec 10 15:32 ./09_tmux.md
 -rw-r--r-- 1 rmdir  staff   593B Dec 11 13:09 ./exercices/Exercice4.md
 -rw-r--r-- 1 rmdir  staff   1.1K Dec 10 15:47 ./exercices/Exercice3.md
 -rw-r--r-- 1 rmdir  staff    81B Dec 11 11:42 ./05_securite.md
--rw-r--r-- 1 rmdir  staff     0B Dec 10 15:33 ./09_advanced_config.md
+-rw-r--r-- 1 rmdir  staff     0B Dec 10 15:33 ./11_advanced_config.md
 -rw-r--r-- 1 rmdir  staff   3.6K Dec 10 14:35 ./01_base.md
 -rw-r--r-- 1 rmdir  staff   2.7K Dec 11 09:53 ./02_file_permissions.md
 -rw-r--r-- 1 rmdir  staff    86B Dec 11 11:40 ./04_installation_et_services.md
 -rw-r--r-- 1 rmdir  staff    12B Dec 10 10:39 ./README.md
 -rw-r--r-- 1 rmdir  staff   2.3K Dec 11 11:24 ./02.1_user_management.md
--rw-r--r-- 1 rmdir  staff     0B Dec 10 15:32 ./08_shell_config.md
+-rw-r--r-- 1 rmdir  staff     0B Dec 10 15:32 ./10_shell_config.md
 -rw-r--r-- 1 rmdir  staff   2.8K Dec 11 13:28 ./03_commandes_essentielles.md
 ```
 

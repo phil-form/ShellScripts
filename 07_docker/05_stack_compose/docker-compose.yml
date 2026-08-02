@@ -1,0 +1,81 @@
+# =============================================================================
+#  Exemple 05 · Une stack complète — API + PostgreSQL + Redis
+#  Démarrer : docker compose up -d --build
+#  Tester   : curl http://localhost:3000
+#  Arrêter  : docker compose down        (ajouter -v pour effacer les données)
+#
+#  Pas de clé `version:` : elle est obsolète depuis Compose v2.
+# =============================================================================
+
+services:
+
+  # ---------------------------------------------------------------------------
+  #  L'API — construite à partir du Dockerfile local
+  # ---------------------------------------------------------------------------
+  api:
+    build:
+      context: ./api          # le dossier envoyé au démon
+      dockerfile: Dockerfile
+      target: dev             # on s'arrête à l'étape `dev` du Dockerfile
+    ports:
+      - "${API_PORT:-3000}:3000"
+    environment:
+      NODE_ENV: development
+      # `db` et `cache` sont les NOMS DE SERVICE : Compose crée un réseau
+      # et un DNS interne. Surtout pas `localhost`, qui désignerait l'API.
+      DB_HOST: db
+      DB_PORT: 5432
+      REDIS_HOST: cache
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-1234}
+      POSTGRES_DB: ${POSTGRES_DB:-app}
+    volumes:
+      - ./api/src:/app/src:ro   # le code de l'hôte, visible en direct
+    depends_on:
+      db:
+        condition: service_healthy   # attend que la base soit PRÊTE
+      cache:
+        condition: service_started
+    restart: unless-stopped
+
+  # ---------------------------------------------------------------------------
+  #  La base de données
+  # ---------------------------------------------------------------------------
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-1234}
+      POSTGRES_DB: ${POSTGRES_DB:-app}
+    ports:
+      # Publié UNIQUEMENT sur la boucle locale : accessible depuis un client
+      # sur la machine, mais pas depuis le réseau. Voir le chapitre 08.
+      # Le port hôte est configurable : deux conteneurs ne peuvent pas publier
+      # le même port, et 5435 est déjà pris par le docker-compose.yml
+      # à la racine du dépôt.
+      - "127.0.0.1:${DB_PORT_HOST:-5433}:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data       # volume nommé = données persistantes
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-postgres} -d ${POSTGRES_DB:-app}"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    restart: unless-stopped
+
+  # ---------------------------------------------------------------------------
+  #  Le cache — aucun port publié : seuls les autres conteneurs y accèdent
+  # ---------------------------------------------------------------------------
+  cache:
+    image: redis:7-alpine
+    command: ["redis-server", "--save", "60", "1", "--loglevel", "warning"]
+    volumes:
+      - redisdata:/data
+    restart: unless-stopped
+
+# Les volumes nommés survivent à `docker compose down`.
+# Seul `docker compose down -v` les supprime.
+volumes:
+  pgdata:
+  redisdata:

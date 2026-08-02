@@ -1,0 +1,3 @@
+# Le .env contient les mots de passe : il ne se versionne jamais.
+# C'est .env.example, sans secret, qui est suivi par git.
+.env

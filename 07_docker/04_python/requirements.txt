@@ -1,0 +1,4 @@
+# Versions épinglées : un build reproductible ne dépend pas de la date
+# à laquelle on le lance.
+flask==3.0.3
+gunicorn==22.0.0

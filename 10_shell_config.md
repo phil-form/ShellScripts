@@ -1,4 +1,4 @@
-# 08 · Configuration du shell (`.bashrc`, `.zshrc`, …)
+# 10 · Configuration du shell (`.bashrc`, `.zshrc`, …)
 
 > [!NOTE]
 > **Objectifs du chapitre**
@@ -434,7 +434,7 @@ PROMPT='%n@%m %~ %# '
 | `%F{green}…%f` | Couleur |
 
 > [!TIP]
-> Configurer à la main un prompt riche (branche git, durée d'exécution, statut de la dernière commande) est fastidieux. Des outils le font pour vous : voir le [chapitre 09 · Configuration avancée](09_advanced_config.md).
+> Configurer à la main un prompt riche (branche git, durée d'exécution, statut de la dernière commande) est fastidieux. Des outils le font pour vous : voir le [chapitre 11 · Configuration avancée](11_advanced_config.md).
 
 ---
 
@@ -674,4 +674,4 @@ Les fichiers de votre home ne sont plus que des liens symboliques vers le dépô
 
 ---
 
-⬅️ [Précédent : 07 · tmux](07_tmux.md) · 🏠 [Sommaire](README.md) · [Suivant : 09 · Configuration avancée ➡️](09_advanced_config.md)
+⬅️ [Précédent : 09 · tmux](09_tmux.md) · 🏠 [Sommaire](README.md) · [Suivant : 11 · Configuration avancée ➡️](11_advanced_config.md)

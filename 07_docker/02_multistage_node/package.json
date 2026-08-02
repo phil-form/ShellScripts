@@ -1,0 +1,9 @@
+{
+  "name": "demo-static",
+  "version": "1.0.0",
+  "description": "Exemple de build multi-étapes du chapitre 07",
+  "scripts": {
+    "build": "node build.js"
+  },
+  "license": "MIT"
+}

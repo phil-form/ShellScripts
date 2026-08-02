@@ -1,4 +1,4 @@
-# 09 · Configuration avancée (`oh-my-*`, thèmes et outillage)
+# 11 · Configuration avancée (`oh-my-*`, thèmes et outillage)
 
 > [!NOTE]
 > **Objectifs du chapitre**
@@ -10,7 +10,7 @@
 > - Déployer sa configuration proprement sur plusieurs machines
 
 > [!IMPORTANT]
-> Ce chapitre suppose le [chapitre 08](08_shell_config.md) acquis : tout ce qui suit ne fait que **générer** ou **remplir** les fichiers `.zshrc`, `.bashrc` et `.tmux.conf` que vous savez maintenant lire.
+> Ce chapitre suppose le [chapitre 10](10_shell_config.md) acquis : tout ce qui suit ne fait que **générer** ou **remplir** les fichiers `.zshrc`, `.bashrc` et `.tmux.conf` que vous savez maintenant lire.
 
 ## Sommaire
 
@@ -304,7 +304,7 @@ source "$OSH/oh-my-bash.sh"
 
 ## Oh My Tmux
 
-[Oh My Tmux](https://github.com/gpakosz/.tmux) est une configuration tmux prête à l'emploi : barre de statut lisible, support de la souris, raccourcis cohérents. Elle complète le [chapitre 07](07_tmux.md).
+[Oh My Tmux](https://github.com/gpakosz/.tmux) est une configuration tmux prête à l'emploi : barre de statut lisible, support de la souris, raccourcis cohérents. Elle complète le [chapitre 09](09_tmux.md).
 
 ### Installation
 
@@ -493,7 +493,7 @@ git clone https://github.com/moi/dotfiles.git ~/dotfiles
 cd ~/dotfiles && ./install.sh
 ```
 
-Le `install.sh` crée les liens symboliques (voir [chapitre 08](08_shell_config.md#organiser-et-versionner-ses-dotfiles)) et installe les paquets manquants.
+Le `install.sh` crée les liens symboliques (voir [chapitre 10](10_shell_config.md#organiser-et-versionner-ses-dotfiles)) et installe les paquets manquants.
 
 ### 2. GNU Stow
 
@@ -542,4 +542,4 @@ Ansible, Salt ou Puppet, dès qu'il s'agit d'un vrai parc de serveurs. C'est aus
 
 ---
 
-⬅️ [Précédent : 08 · Configuration du shell](08_shell_config.md) · 🏠 [Sommaire](README.md)
+⬅️ [Précédent : 10 · Configuration du shell](10_shell_config.md) · 🏠 [Sommaire](README.md)

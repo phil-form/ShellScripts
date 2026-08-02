@@ -163,7 +163,7 @@ source ./fonctions.sh
 > `source script.sh` exécute le script **dans le shell courant** (les fonctions et variables restent disponibles ensuite).
 > `./script.sh` l'exécute dans un **sous-processus** : rien n'en subsiste au retour.
 >
-> C'est exactement le même mécanisme qui permet d'appliquer une modification du `.bashrc` sans rouvrir son terminal — voir le [chapitre 08](../../08_shell_config.md).
+> C'est exactement le même mécanisme qui permet d'appliquer une modification du `.bashrc` sans rouvrir son terminal — voir le [chapitre 10](../../10_shell_config.md).
 
 Structure typique d'un projet de scripts :
 
@@ -198,4 +198,4 @@ source "$SCRIPT_DIR/lib/fonctions.sh"
 
 ---
 
-⬅️ [Précédent : 06.5 · Arguments](../05_Arguments/args.md) · 🏠 [Sommaire](../../README.md) · [Suivant : 07 · tmux ➡️](../../07_tmux.md)
+⬅️ [Précédent : 06.5 · Arguments](../05_Arguments/args.md) · 🏠 [Sommaire](../../README.md) · [Suivant : 07 · Docker (développeurs) ➡️](../../07_docker.md)

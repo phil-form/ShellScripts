@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{TITRE}}</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <main>
+        <h1>{{TITRE}}</h1>
+        <p>Cette page a été générée pendant l'étape <code>builder</code>,
+           puis copiée dans une image <code>nginx:alpine</code>.</p>
+        <ul>
+            <li>Construite le : <strong>{{DATE}}</strong></li>
+            <li>Avec Node : <strong>{{NODE}}</strong></li>
+        </ul>
+        <p>L'image que vous exécutez ne contient ni Node, ni npm, ni le code source.</p>
+    </main>
+</body>
+</html>

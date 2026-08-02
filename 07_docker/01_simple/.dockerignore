@@ -1,0 +1,20 @@
+# Tout ce qui est listé ici n'est PAS envoyé au démon Docker au moment du build.
+# Sans ce fichier, `node_modules` et `.git` partent dans le contexte : build lent
+# et risque de copier des fichiers locaux dans l'image.
+
+.git
+.gitignore
+node_modules
+npm-debug.log
+dist
+*.log
+
+# Les secrets ne doivent JAMAIS entrer dans une image
+.env
+*.pem
+*.key
+
+# Inutile dans l'image
+Dockerfile
+.dockerignore
+README.md

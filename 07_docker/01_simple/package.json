@@ -1,0 +1,10 @@
+{
+  "name": "demo-api",
+  "version": "1.0.0",
+  "description": "Exemple minimal du chapitre 07 — aucune dépendance",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js"
+  },
+  "license": "MIT"
+}

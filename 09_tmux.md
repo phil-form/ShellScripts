@@ -1,4 +1,4 @@
-# 07 · tmux (Terminal Multiplexer)
+# 09 · tmux (Terminal Multiplexer)
 
 C'est un outil très intéressant quand on fait de l'administration système à distance : il permet de gérer des **sessions** sur le serveur et de les **récupérer** en cas de déconnexion.
 
@@ -206,7 +206,7 @@ Avec [oh-my-tmux](https://github.com/gpakosz/.tmux), on peut notamment utiliser 
 CTRL + b  =>  m
 ```
 
-`oh-my-tmux` améliore tmux et ajoute le support de la souris, une barre de statut lisible et de nombreux réglages par défaut sensés. Sa configuration est détaillée dans le [chapitre 09 · Configuration avancée](09_advanced_config.md#oh-my-tmux).
+`oh-my-tmux` améliore tmux et ajoute le support de la souris, une barre de statut lisible et de nombreux réglages par défaut sensés. Sa configuration est détaillée dans le [chapitre 11 · Configuration avancée](11_advanced_config.md#oh-my-tmux).
 
 ---
 
@@ -236,4 +236,4 @@ CTRL + b  =>  m
 
 ---
 
-⬅️ [Précédent : 06.6 · Fonctions](06_shellscript/06_fonctions/fonctions.md) · 🏠 [Sommaire](README.md) · [Suivant : 08 · Configuration du shell ➡️](08_shell_config.md)
+⬅️ [Précédent : 08 · Docker pour l'administrateur](08_docker_administration.md) · 🏠 [Sommaire](README.md) · [Suivant : 10 · Configuration du shell ➡️](10_shell_config.md)

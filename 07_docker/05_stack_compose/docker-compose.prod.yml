@@ -1,0 +1,64 @@
+# =============================================================================
+#  Surcharge de production — s'applique PAR-DESSUS docker-compose.yml
+#
+#  docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d
+#
+#  On n'exprime que les différences : ce qui n'est pas répété ici est hérité
+#  du fichier de base.
+#
+#  ATTENTION AUX LISTES : par défaut, Compose ne remplace pas une liste, il
+#  la CONCATÈNE. Écrire `ports: []` ici ne supprime donc rien, et redéclarer
+#  un port l'AJOUTE à celui du fichier de base. D'où les marqueurs :
+#     !override  → remplace complètement la valeur héritée
+#     !reset     → efface la valeur héritée
+#  (Compose ≥ 2.24 ; vérifier le résultat avec `docker compose … config`)
+# =============================================================================
+
+services:
+
+  api:
+    build:
+      target: runtime          # l'étape durcie, pas l'étape `dev`
+    environment:
+      NODE_ENV: production
+    volumes: !reset []         # surtout pas de code monté depuis l'hôte
+    ports: !override
+      - "127.0.0.1:3000:3000"  # derrière un reverse proxy, jamais exposé direct
+    # --- Limites de ressources (chapitre 08) ---
+    deploy:
+      resources:
+        limits:
+          cpus: "1.0"
+          memory: 512M
+    # --- Durcissement (chapitre 08) ---
+    read_only: true
+    tmpfs:
+      - /tmp
+    cap_drop:
+      - ALL
+    security_opt:
+      - "no-new-privileges:true"
+    # --- Rotation des logs, sinon le disque se remplit ---
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  db:
+    ports: !reset []           # la base n'est joignable que par le réseau Docker
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  cache:
+    deploy:
+      resources:
+        limits:
+          memory: 256M
