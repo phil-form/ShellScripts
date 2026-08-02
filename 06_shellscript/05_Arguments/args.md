@@ -1,20 +1,42 @@
-### Les arguments
+# 06.5 · Les arguments
 
-Les arguments sont ce qui suit la commande qu'on exécute
+> [!NOTE]
+> **Objectifs**
+> - Récupérer les arguments positionnels d'un script
+> - Compter et parcourir les arguments
+> - Parser des options (`-h`, `-v`, `-u valeur`) avec `getopts`
 
-```shell
+## Sommaire
+
+1. [Les arguments positionnels](#les-arguments-positionnels)
+2. [Nombre d'arguments](#nombre-darguments)
+3. [Le tableau des arguments](#le-tableau-des-arguments)
+4. [Parsing d'arguments avec getopts](#parsing-darguments-avec-getopts)
+5. [Syntaxe des options](#syntaxe-des-options)
+6. [Vérifier la présence d'un argument avec un if](#vérifier-la-présence-dun-argument-avec-un-if)
+7. [Récapitulatif](#récapitulatif)
+
+---
+
+## Les arguments positionnels
+
+Les arguments sont ce qui suit la commande qu'on exécute :
+
+```bash
 ls -la /dev
 ```
-Ici les arguments sont : 
 
-| arguments | nom |
-|-----------|-----|
-| ls        | $0  |
-| -la       | $1  |
-| /dev      | $2  |
+Ici les arguments sont :
 
-Récupérer les arguments 
-```shell
+| Argument | Variable |
+|----------|----------|
+| `ls`   | `$0` |
+| `-la`  | `$1` |
+| `/dev` | `$2` |
+
+Les récupérer dans un script :
+
+```bash
 #!/bin/bash
 
 echo "Nom du script : $0"
@@ -27,108 +49,153 @@ echo "Argument 6 : $6"
 echo "etc"
 ```
 
-#### Savoir le nombre d'arguments
+> [!NOTE]
+> Au-delà de `$9`, il faut utiliser des accolades : `${10}`, `${11}`… Sinon `$10` est interprété comme `$1` suivi du caractère `0`.
 
-```shell
+---
+
+## Nombre d'arguments
+
+```bash
 #!/bin/bash
 
 echo $#
 ```
 
-#### Récupérer le tableau des arguments
+C'est la base de toute vérification d'usage :
 
-```shell
+```bash
 #!/bin/bash
 
-echo $@
+if [ $# -lt 2 ]; then
+  echo "Usage : $0 <source> <destination>" >&2
+  exit 2
+fi
 ```
 
-#### Récupérer la chaine de caractère contenant tous les arguements
+---
 
-```shell
+## Le tableau des arguments
+
+Récupérer **le tableau** des arguments :
+
+```bash
 #!/bin/bash
 
-echo $*
+echo "$@"
 ```
 
-### Parsion d'arguments
+Récupérer **la chaîne de caractères** contenant tous les arguments :
 
-```shell
+```bash
+#!/bin/bash
+
+echo "$*"
+```
+
+> [!IMPORTANT]
+> La différence entre les deux n'apparaît qu'entre guillemets, et elle est essentielle :
+>
+> | Forme | Résultat avec les arguments `a` `b c` |
+> |-------|----------------------------------------|
+> | `"$@"` | Deux éléments distincts : `a` et `b c` ✅ |
+> | `"$*"` | Un seul élément : `a b c` |
+>
+> Dans une boucle, utilisez **toujours** `"$@"` :
+>
+> ```bash
+> for arg in "$@"; do
+>   echo "Argument : $arg"
+> done
+> ```
+
+---
+
+## Parsing d'arguments avec getopts
+
+```bash
 #!/bin/bash
 
 # Syntaxe
-# while getopts "options" NOM_VARIBLE; 
+# while getopts "options" NOM_VARIABLE;
 # do
 #   case "$NOM_VARIABLE" in
 #   ....
 #   esac
 # done
 
-while getopts "hv" OPS;
+while getopts "hv" OPS
 do
   case "$OPS" in
     h)
       echo "afficher l'aide"
       exit 0
       ;;
-    v) 
+    v)
       echo "Activer le mode verbose"
       ;;
     *)
-      echo "Option inconnue ! $OPS"
+      echo "Option inconnue ! $OPS" >&2
       exit 1
       ;;
+  esac
 done
 ```
 
-Ici si je fais :
-```shell
+> [!WARNING]
+> Le `case` doit impérativement être refermé par un **`esac`** avant le `done`, sinon bash s'arrête sur une erreur de syntaxe.
+
+Exemples d'exécution :
+
+```bash
 ./script.sh -h
 ```
-la sortie sera : 
-```terminaloutput
-affichier l'aide
+
+```text
+afficher l'aide
 ```
 
-Ici si je fais :
-```shell
+```bash
 ./script.sh -v
 ```
-la sortie sera :
-```terminaloutput
+
+```text
 Activer le mode verbose
 ```
 
-Ici si je fais :
-```shell
+```bash
 ./script.sh -r
 ```
-la sortie sera :
-```terminaloutput
+
+```text
 Option inconnue ! -r
 ```
 
+---
 
-#### Syntaxe des options 
+## Syntaxe des options
 
-```shell
-# je présice -h -v
+```bash
+# Je précise les options -h et -v
 getopts "hv"
-# Ici je précise que -u et -p seront suivit d'une valeur qui sera l'argument suivant.
-getopts "u:p:hv" 
+
+# Ici je précise que -u et -p seront suivis d'une valeur (l'argument suivant)
+getopts "u:p:hv"
 ```
 
-```shell
+Le `:` après une lettre signifie : « cette option attend une valeur ».
+
+```bash
 #!/bin/bash
 
 VERBOSE=false
 ERRORS=()
 
-while getopts "u:p:hv" OPS;
+while getopts "u:p:hv" OPS
 do
   case "${OPS}" in
     u)
-      # le $OPTARG me permet de récupérer la valeur de l'argument suivant
+      # $OPTARG contient la valeur de l'option
       echo "username $OPTARG"
       USERNAME=${OPTARG}
       ;;
@@ -140,25 +207,57 @@ do
       echo "afficher l'aide"
       exit 0
       ;;
-    v) 
+    v)
       echo "Activer le mode verbose"
       VERBOSE=true
       ;;
     *)
-      echo "Option inconnue '$OPS' !"
+      echo "Option inconnue '$OPS' !" >&2
       exit 1
       ;;
   esac
 done
 ```
 
-#### Vérifier la présence d'un argument dans un argument via un if
+| Variable | Contenu |
+|----------|---------|
+| `$OPTARG` | La valeur associée à l'option courante |
+| `$OPTIND` | L'index du prochain argument à traiter |
 
-```shell
-# Ici je regarde si la chaine d'arguments contient -v
-if [ $* == *-v*];
-then
+> [!TIP]
+> Après la boucle, `shift $((OPTIND - 1))` retire toutes les options traitées, de sorte que `"$@"` ne contienne plus que les arguments positionnels restants (les fichiers à traiter, par exemple).
+>
+> Ne passez **jamais** un mot de passe en argument de ligne de commande sur une vraie machine : il est visible par tous dans `ps aux` et reste dans l'historique du shell. Préférez `read -s`, une variable d'environnement ou un fichier protégé.
+
+---
+
+## Vérifier la présence d'un argument avec un if
+
+```bash
+# Ici je regarde si la chaîne d'arguments contient -v
+if [[ "$*" == *-v* ]]; then
   VERBOSE=true
 fi
 ```
 
+> [!NOTE]
+> Cette forme nécessite `[[ ]]` : la comparaison avec un joker (`*-v*`) n'est pas supportée par `[ ]`.
+> Elle est pratique pour un cas simple, mais `getopts` reste préférable dès que le script accepte plusieurs options.
+
+---
+
+## Récapitulatif
+
+| Variable | Contenu |
+|----------|---------|
+| `$0` | Nom du script |
+| `$1` … `$9`, `${10}` | Arguments positionnels |
+| `$#` | Nombre d'arguments |
+| `"$@"` | Tous les arguments, comme éléments distincts ✅ |
+| `"$*"` | Tous les arguments, en une seule chaîne |
+| `$OPTARG` | Valeur de l'option courante (`getopts`) |
+| `shift` | Décale les arguments d'un cran |
+
+---
+
+⬅️ [Précédent : 06.4 · Gestion des erreurs](../04_gestion_des_erreurs/gestion_des_erreurs.md) · 🏠 [Sommaire](../../README.md) · [Suivant : 06.6 · Fonctions ➡️](../06_fonctions/fonctions.md)

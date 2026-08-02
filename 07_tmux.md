@@ -1,166 +1,239 @@
-## TMUX (Terminal Multiplexer)
+# 07 · tmux (Terminal Multiplexer)
 
-C'est outils assez intéressent quand on fait de l'administrion système à distance.
+C'est un outil très intéressant quand on fait de l'administration système à distance : il permet de gérer des **sessions** sur le serveur et de les **récupérer** en cas de déconnexion.
 
-Cet outil va nous permettre de gérer des sessions sur le server et de récupérer
-celles-ci en cas de déconnexion.
+> [!NOTE]
+> **Objectifs du chapitre**
+> - Créer, quitter et rejoindre une session tmux
+> - Découper un terminal en panneaux et gérer plusieurs fenêtres
+> - Naviguer et chercher dans l'historique du terminal
 
-1) Installation
-```shell
+> [!TIP]
+> **Le concept en une phrase :** votre travail tourne sur le **serveur**, pas dans votre terminal. Si votre connexion SSH tombe, la session tmux continue de tourner et vous la retrouvez intacte en vous reconnectant.
+>
+> Hiérarchie : une **session** contient des **fenêtres**, qui contiennent des **panneaux** (*panes*).
+
+## Sommaire
+
+1. [Gestion des sessions](#gestion-des-sessions)
+2. [Découper le terminal (panneaux)](#découper-le-terminal-panneaux)
+3. [Les fenêtres](#les-fenêtres)
+4. [Navigation et recherche](#navigation-et-recherche)
+5. [Oh my tmux](#oh-my-tmux)
+6. [Aide-mémoire](#aide-mémoire)
+
+---
+
+## Le préfixe
+
+Presque tous les raccourcis tmux commencent par la combinaison `CTRL + b` : on l'appelle le **préfixe**. On appuie sur `CTRL + b`, on **relâche**, puis on appuie sur la touche de l'action.
+
+Dans tout ce chapitre, cette séquence est notée :
+
+```text
+CTRL + b  =>  touche
+```
+
+---
+
+## Gestion des sessions
+
+### 1. Installation
+
+```bash
 sudo apt install tmux
 ```
 
-2) Démarrer une session tmux
-```shell
+### 2. Démarrer une session
+
+```bash
 tmux
 ```
 
-```shell
+```bash
 tmux new -s session-name
 ```
 
-3) Sortir d'une session (en la gardant active)
+> [!TIP]
+> Nommez toujours vos sessions (`-s`). Retrouver `session-name` est bien plus simple que de deviner à quoi correspond la session `0`.
 
-ctrl + b (lacher les touches) appyer sur d
+### 3. Sortir d'une session en la gardant active (*detach*)
 
-pour les raccourci suivant je vais abbrégé par :
-ctrl + b => d
+```text
+CTRL + b  =>  d
+```
 
-4) Lister les sessions actives 
-```shell
+### 4. Lister les sessions actives
+
+```bash
 tmux ls
 ```
-ou dans tmux
 
-ctrl + b => s
+ou, depuis tmux :
 
-5) Rejoindre une session 
-```shell
+```text
+CTRL + b  =>  s
+```
+
+### 5. Rejoindre une session (*attach*)
+
+```bash
 tmux a -t session-name
 ```
-ou 
-```shell
+
+```bash
 tmux attach -t session-name
 ```
 
-6) Détruire une session
+### 6. Détruire une session
 
-```shell
+```bash
 tmux kill-session -t session-name
 ```
-```shell
+
+```bash
 tmux kill -t session-name
 ```
-```shell
+
+```bash
 tmux k -t session-name
 ```
 
-7) Renommer une session
+### 7. Renommer une session
 
-ctrl + b => shift + $
+```text
+CTRL + b  =>  $
+```
 
-8) Changer la cwd 
+### 8. Changer le répertoire de travail par défaut
 
-si on ouvre un nouveau terminal dans une session il va se positionner à un CWD
-(current working directory) par défaut
+Quand on ouvre un nouveau terminal dans une session, il se positionne dans un CWD (*current working directory*) par défaut.
 
-ctrl + b => shift + :
+```text
+CTRL + b  =>  :
+```
 
-on va pouvoir ensuite rentrer la commande
+puis on saisit la commande :
 
-a -c /new/directory
+```text
+attach -c /new/directory
+```
 
-Ici l'idée est de se positionner automatiquement dans le bon dossier en ouvrant des nouveaux
-terminaux dans une session tmux (par exemple le dossier de travail d'un projet)
+L'idée est de se positionner automatiquement dans le bon dossier en ouvrant de nouveaux terminaux dans une session tmux — par exemple le dossier de travail d'un projet.
 
-9) Activer le scrolling 
+---
 
-ctrl + b => [
+## Découper le terminal (panneaux)
 
-sortir du scrolling :
+Je peux diviser le terminal en plusieurs parties :
 
+| Raccourci | Action |
+|-----------|--------|
+| `CTRL + b  =>  %` | Split **vertical** (côte à côte) |
+| `CTRL + b  =>  "` | Split **horizontal** (l'un au-dessus de l'autre) |
+
+> [!NOTE]
+> Les noms prêtent à confusion : `%` sépare l'écran par une barre verticale, `"` par une barre horizontale.
+
+### Se déplacer entre les panneaux
+
+| Raccourci | Action |
+|-----------|--------|
+| `CTRL + b  =>  ←↑↓→` | Aller au panneau dans cette direction |
+| `CTRL + b  =>  o` | Circuler dans le sens des aiguilles d'une montre |
+| `CTRL + b  =>  {` | Circuler dans le sens inverse |
+| `CTRL + b  =>  ;` | Basculer vers le dernier panneau utilisé |
+| `CTRL + b  =>  z` | Zoomer / dézoomer le panneau courant (plein écran) |
+| `CTRL + b  =>  x` | Fermer le panneau courant |
+
+---
+
+## Les fenêtres
+
+| Raccourci | Action |
+|-----------|--------|
+| `CTRL + b  =>  c` | **C**réer une fenêtre |
+| `CTRL + b  =>  ,` | Renommer la fenêtre courante |
+| `CTRL + b  =>  !` | Extraire le panneau courant dans sa propre fenêtre |
+| `CTRL + b  =>  &` | Fermer la fenêtre active |
+| `CTRL + b  =>  n` | Fenêtre suiva**n**te |
+| `CTRL + b  =>  p` | Fenêtre **p**récédente |
+| `CTRL + b  =>  w` | Lister les fenêtres |
+| `CTRL + b  =>  0-9` | Aller directement à la fenêtre n° X |
+
+---
+
+## Navigation et recherche
+
+### Activer le scrolling (mode copie)
+
+```text
+CTRL + b  =>  [
+```
+
+Sortir du mode scrolling :
+
+```text
 q
+```
 
-10) Rechercher dans le terminal 
+### Rechercher dans l'historique du terminal
 
-il faut d'abord être en mode scrolling 
+Il faut d'abord être en mode scrolling :
 
-ctrl + b => [
+```text
+CTRL + b  =>  [
+```
 
-ensuite on peut faire :
+Ensuite :
 
-ctrl + r
+```text
+CTRL + r
+```
 
-et tapper ce que l'on veut chercher
+et taper ce que l'on cherche.
 
-11) Avec oh-my-tmux on peut utiliser la souris
+> [!TIP]
+> En mode copie, on peut aussi sélectionner du texte (`ESPACE` pour commencer, `ENTRÉE` pour copier) et le recoller avec `CTRL + b  =>  ]`.
 
-raccourci : 
+---
 
-ctrl + b => m
+## Oh my tmux
 
-#### Split
+Avec [oh-my-tmux](https://github.com/gpakosz/.tmux), on peut notamment utiliser la souris :
 
-Je vais pouvoir diviser le terminal en plusieurs parties avec : 
+```text
+CTRL + b  =>  m
+```
 
-Split horizontal :
+`oh-my-tmux` améliore tmux et ajoute le support de la souris, une barre de statut lisible et de nombreux réglages par défaut sensés. Sa configuration est détaillée dans le [chapitre 09 · Configuration avancée](09_advanced_config.md#oh-my-tmux).
 
-ctrl + b => % 
+---
 
-Split vertical : 
+## Aide-mémoire
 
-ctrl + b => "
+### En ligne de commande
 
-1) Changer de panneau : 
+| Commande | Action |
+|----------|--------|
+| `tmux` | Nouvelle session anonyme |
+| `tmux new -s nom` | Nouvelle session nommée |
+| `tmux ls` | Lister les sessions |
+| `tmux a -t nom` | Rejoindre une session |
+| `tmux kill-session -t nom` | Détruire une session |
 
-ctrl + b => flèche directionnelles (celle qui va dans le sense du panneau désiré)
+### Dans tmux (préfixe `CTRL + b`)
 
-2) Cycle les terminaux (split)
+| Touche | Action | | Touche | Action |
+|--------|--------|---|--------|--------|
+| `d` | Se détacher | | `c` | Nouvelle fenêtre |
+| `s` | Lister les sessions | | `,` | Renommer la fenêtre |
+| `$` | Renommer la session | | `n` / `p` | Fenêtre suivante / précédente |
+| `%` | Split vertical | | `w` | Lister les fenêtres |
+| `"` | Split horizontal | | `&` | Fermer la fenêtre |
+| `←↑↓→` | Changer de panneau | | `[` | Mode scroll / copie |
+| `z` | Zoomer un panneau | | `?` | **Afficher tous les raccourcis** |
 
-circuler dans le sense des aiguilles d'une montre :
+---
 
-ctrl + b => o
-
-dans le sense inverse : 
-
-ctrl + b => shift + {
-
-3) Passer sur le split le plus utilisé
-
-ctrl + b => ;
-
-#### Fenêtre
-
-1) Création de fenêtre :
-
-ctrl + b => c 
-
-2) Changer le titre d'une fenetre
-
-ctrl + b => ,
-
-3) changer le terminal actuel de fenêtre
-
-ctrl + b => shift + !
-
-4) fermer la fenetre active
-
-ctrl + b => shift + &
-
-5) Changer de fenetre 
-
-pour aller à la fenetre suivante: 
-
-ctrl + b => n
-
-fenetre précédente : 
-
-ctrl + b => p
-
-6) Lister les fenetre
-
-ctrl + b => w
-
-### Oh my tmux (améliorer tmux et ajoute le support de la souris)
-
-https://github.com/gpakosz/.tmux
+⬅️ [Précédent : 06.6 · Fonctions](06_shellscript/06_fonctions/fonctions.md) · 🏠 [Sommaire](README.md) · [Suivant : 08 · Configuration du shell ➡️](08_shell_config.md)
