@@ -11,7 +11,7 @@
 | 01 | [Les bases du terminal](01_base.md) | Navigation, fichiers, redirections, éditeurs, processus |
 | 02 | [Les permissions](02_file_permissions.md) | POSIX, `chmod`, `chown`, permissions spéciales |
 | 02.1 | [Utilisateurs et groupes](02.1_user_management.md) | `useradd`, groupes, mots de passe, `su` / `sudo` |
-| 03 | [Commandes essentielles](03_commandes_essentielles.md) | `tree`, `grep`, `find`, `du`, `df`, `tar` |
+| 03 | [Commandes essentielles](03_commandes_essentielles.md) | `tree`, `grep`, `sed`, `awk`, `cut` / `sort` / `uniq`, `find`, `xargs`, `du`, `df`, `tar` |
 | 04 | [Paquets, services et cron](04_installation_et_services.md) | `apt` / `dnf`, `systemctl`, services custom, `journalctl`, `cron` |
 | 05 | [Sécurité](05_securite.md) | ACL, `sudoers`, pare-feu, SSH, AppArmor / SELinux |
 | 06 | [**Shell scripting**](#-06--shell-scripting) | *voir le détail ci-dessous* |
