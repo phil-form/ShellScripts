@@ -131,14 +131,16 @@ Vous créez un dossier `delvaux/partage` que trois collègues doivent se partage
 3. Ajoutez `bob` **et** votre propre utilisateur au groupe `staff`, **sans** les retirer de leurs autres groupes.
 4. Vérifiez les groupes de `bob`.
 5. Donnez au dossier `delvaux/` (et tout son contenu) le groupe `staff`, puis passez ses droits à `rwxrwx---`.
-### Exercice 2.6 — Cycle de vie d'un compte
+
+### Exercice 2.6 — Changer d'identité
+
+1. Exécutez la seule commande `whoami` en tant que `root`, **sans** ouvrir de session root.
+2. Ouvrez une **vraie session** (environnement propre) en tant que `bob`, puis ressortez-en.
+
+### Exercice 2.7 — Cycle de vie d'un compte
 
 1. Changez le mot de passe de `bob`.
 2. Renommez l'utilisateur `bob` en `robert`.
 3. Verrouillez temporairement le compte `robert`, puis déverrouillez-le.
 4. Supprimez l'utilisateur `robert` **ainsi que** sa *home directory*.
-### Exercice 2.7 — Changer d'identité
-
-1. Exécutez la seule commande `whoami` en tant que `root`, **sans** ouvrir de session root.
-2. Ouvrez une **vraie session** (environnement propre) en tant que `bob`, puis ressortez-en.
 ---
