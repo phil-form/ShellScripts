@@ -3,6 +3,7 @@
 > [!NOTE]
 > **Objectifs du chapitre**
 > - Se déplacer dans une arborescence depuis le terminal
+> - Comprendre l'organisation du système de fichiers Linux
 > - Créer, copier, déplacer et supprimer des fichiers et des dossiers
 > - Rediriger les sorties d'une commande et les chaîner entre elles
 > - Lire et éditer un fichier avec `nano` et `vim`
@@ -11,14 +12,15 @@
 ## Sommaire
 
 1. [Navigation dans le terminal](#navigation-dans-le-terminal)
-2. [Manipulation de fichiers et de dossiers](#manipulation-de-fichiers-et-de-dossiers)
-3. [Redirection des sorties](#redirection-des-sorties)
-4. [Afficher le contenu d'un fichier](#afficher-le-contenu-dun-fichier)
-5. [Éditer un fichier](#éditer-un-fichier)
-6. [Redirection avec EOF (heredoc)](#redirection-avec-eof-heredoc)
-7. [Chaîner des commandes avec le pipe](#chaîner-des-commandes-avec-le-pipe)
-8. [Gestion des processus](#gestion-des-processus)
-9. [Récapitulatif](#récapitulatif)
+2. [Le système de fichiers Linux](#le-système-de-fichiers-linux)
+3. [Manipulation de fichiers et de dossiers](#manipulation-de-fichiers-et-de-dossiers)
+4. [Redirection des sorties](#redirection-des-sorties)
+5. [Afficher le contenu d'un fichier](#afficher-le-contenu-dun-fichier)
+6. [Éditer un fichier](#éditer-un-fichier)
+7. [Redirection avec EOF (heredoc)](#redirection-avec-eof-heredoc)
+8. [Chaîner des commandes avec le pipe](#chaîner-des-commandes-avec-le-pipe)
+9. [Gestion des processus](#gestion-des-processus)
+10. [Récapitulatif](#récapitulatif)
 
 ---
 
@@ -58,6 +60,58 @@ cd ../NomDuDossier
 > | `~`  | Le *home* de l'utilisateur courant (`/home/username`) |
 > | `-`  | Le dossier précédent (`cd -` fait l'aller-retour) |
 > | `/`  | La racine du système |
+
+---
+
+## Le système de fichiers Linux
+
+Sous Linux, **tout part d'une seule racine notée `/`**. Il n'y a pas de lecteurs `C:` ou `D:` comme sous Windows : les disques, les clés USB et même certains périphériques sont « branchés » (*montés*) quelque part dans cette unique arborescence.
+
+Sous cette racine, on trouve toujours à peu près les mêmes dossiers, chacun avec un rôle bien précis (c'est la norme *FHS — Filesystem Hierarchy Standard*).
+
+```
+/
+├── bin    → commandes de base (ls, cp, cat…)
+├── sbin   → commandes d'administration (réservées à root)
+├── boot   → noyau Linux et fichiers de démarrage
+├── etc    → fichiers de configuration du système
+├── home   → dossiers personnels des utilisateurs
+├── root   → dossier personnel de l'administrateur (root)
+├── lib    → bibliothèques partagées par les programmes
+├── usr    → programmes et données installés (le gros du système)
+├── var    → données qui varient : logs, files d'attente, caches…
+├── tmp    → fichiers temporaires (effacés au redémarrage)
+├── opt    → logiciels tiers installés « à part »
+├── mnt    → point de montage manuel (disques, partages réseau)
+├── media  → montage automatique des supports amovibles (USB, CD…)
+├── dev    → périphériques vus comme des fichiers (disques, terminaux…)
+├── proc   → système de fichiers virtuel : état des processus et du noyau
+└── sys    → système de fichiers virtuel : matériel et paramètres du noyau
+```
+
+| Dossier | Rôle | Exemple concret |
+|---------|------|-----------------|
+| `/bin`  | Commandes essentielles, disponibles pour tous | `/bin/ls`, `/bin/cp` |
+| `/sbin` | Commandes d'administration système | `/sbin/reboot`, `/sbin/fdisk` |
+| `/boot` | Noyau et amorçage (bootloader) | `/boot/vmlinuz`, GRUB |
+| `/etc`  | **Toute la configuration** du système | `/etc/passwd`, `/etc/ssh/sshd_config` |
+| `/home` | Fichiers personnels des utilisateurs | `/home/alice`, `/home/bob` |
+| `/root` | *Home* de l'utilisateur root | `/root` |
+| `/usr`  | Programmes installés et leurs ressources | `/usr/bin`, `/usr/share` |
+| `/var`  | Données qui grossissent avec le temps | `/var/log`, `/var/www` |
+| `/tmp`  | Fichiers temporaires, jetables | fichiers d'un installeur |
+| `/dev`  | Périphériques matériels vus comme des fichiers | `/dev/sda`, `/dev/null` |
+| `/proc` | Vue **virtuelle** des processus et du noyau | `/proc/cpuinfo`, `/proc/1234` |
+| `/sys`  | Vue **virtuelle** du matériel et du noyau | `/sys/class/net` |
+
+> [!NOTE]
+> `/proc` et `/sys` n'existent pas sur le disque : ils sont générés **à la volée** par le noyau. Lire `/proc/cpuinfo` revient à demander au noyau les infos du processeur en direct.
+
+> [!TIP]
+> Deux dossiers à connaître par cœur au quotidien : **`/etc`** (là où on configure) et **`/var/log`** (là où on regarde ce qui s'est passé quand ça ne marche pas).
+
+> [!CAUTION]
+> Les dossiers `/`, `/etc`, `/bin`, `/boot`, `/usr`… appartiennent au système. On n'y touche qu'avec `sudo` et en sachant ce qu'on fait : une suppression malheureuse peut rendre la machine inutilisable.
 
 ---
 
