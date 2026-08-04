@@ -3,6 +3,8 @@ version: '3.9'
 services:
   db:
     image: postgres:12-alpine
+    networks:
+      - esomusesobisback_default
     environment:
       POSTGRES_PASSWORD: 1234
       POSTGRES_USER: postgres
@@ -12,3 +14,8 @@ services:
       - '5435:5432'
     volumes:
       - ./:/init_db
+
+networks:
+  db-network:
+    name: db-network
+    driver: bridge
