@@ -903,7 +903,6 @@ sudo -e /etc/nginx/nginx.conf      # syntaxe équivalente
 | Utilisateur de l'éditeur | **root** | vous |
 | Configuration chargée | celle de **root** (`/root/.vimrc`) — pas la vôtre | **la vôtre** (`~/.vimrc`, `~/.config/nvim/`) |
 | Plugins exécutés | en root | avec vos droits |
-| Évasion de shell (`:!sh`) | donne un **shell root** | donne un shell sous votre identité |
 | Fichier temporaire d'échange (`.swp`) | écrit en root, parfois là où il ne faut pas | dans votre espace |
 | Droit sudo nécessaire | `ALL` ou l'éditeur entier | `sudoedit /chemin/precis` |
 
@@ -1015,16 +1014,12 @@ backup ALL=(root) NOPASSWD: /usr/bin/tar --acls -czf * /srv/data
 >
 > Cette règle autorise `sudo chown alice /etc /var/www` — le joker absorbe des arguments supplémentaires.
 
-> [!CAUTION]
-> **2. Les commandes qui donnent un shell.** Beaucoup d'outils courants permettent de s'échapper vers un shell : `vim`, `less`, `more`, `man`, `find -exec`, `awk`, `nmap --script`, `git` (via ses hooks ou son pager), `tar --to-command`, `apt` (via `APT::Update::Pre-Invoke`). Une seule de ces commandes en `(root) ALL` équivaut à un accès root complet.
->
-> Le site [GTFOBins](https://gtfobins.github.io/) recense ces évasions. C'est la référence à consulter **avant** d'ajouter une commande dans un sudoers.
 
 > [!CAUTION]
-> **3. Les scripts modifiables.** Toute commande autorisée en sudo doit appartenir à root et n'être modifiable que par root — le binaire comme tous les dossiers de son chemin.
+> **2. Les scripts modifiables.** Toute commande autorisée en sudo doit appartenir à root et n'être modifiable que par root — le binaire comme tous les dossiers de son chemin.
 
 > [!CAUTION]
-> **4. Les chemins relatifs.** Une règle doit toujours utiliser un chemin absolu. `alice ALL=(root) systemctl` (sans chemin) ne fonctionne pas et n'apporte aucune garantie.
+> **3. Les chemins relatifs.** Une règle doit toujours utiliser un chemin absolu. `alice ALL=(root) systemctl` (sans chemin) ne fonctionne pas et n'apporte aucune garantie.
 
 Audit rapide des droits accordés sur une machine :
 
