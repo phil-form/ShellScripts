@@ -1729,16 +1729,6 @@ tcp   LISTEN 0.0.0.0:80           users:(("nginx",pid=1201,fd=6))
 >
 > `0.0.0.0` = toutes les interfaces · `127.0.0.1` = machine locale uniquement · `::` = toutes, en IPv6.
 
-#### 2. Tester depuis l'extérieur
-
-Depuis **une autre machine** — tester depuis la machine elle-même ne prouve rien, le trafic local ne traverse pas les mêmes chaînes :
-
-```bash
-nc -zv 192.168.1.10 22            # test d'un port
-nmap -Pn -p 22,80,443 192.168.1.10
-curl -v telnet://192.168.1.10:80
-```
-
 #### 3. Lire les journaux
 
 ```bash

@@ -49,6 +49,19 @@
 | 11 | [Exercice 11](exercices/Exercices11/) | Scripts : arguments et création d'utilisateurs — ch. 06 |
 | 12 | [Exercice 12](exercices/Exercices12/) | Scripts : fonctions et bibliothèque partagée — ch. 06 |
 
+### 🧭 Les deux parcours thématiques
+
+Deux jeux d'exercices séparés, **sans corrigé**, chacun bâti sur un fil rouge unique et ne reprenant que les
+chapitres qui concernent son public :
+
+| Parcours | Pour qui | Contenu |
+|----------|----------|---------|
+| 👩‍💻 [**Développeur**](exercices/dev/) | Un dev qui travaille sous Linux au quotidien | Terminal, fouille de code et de logs, le minimum d'admin utile à un dev, scripting, Docker, tmux, environnement de travail — autour de l'application `ticketflow` |
+| 🛠️ [**Administrateur système**](exercices/admin/) | Un admin qui reprend un serveur | Prise en main, permissions, comptes, boîte à outils, services et cron, ACL et `sudo`, SSH et pare-feu, AppArmor / SELinux, scripts d'admin, Docker en exploitation, environnement des utilisateurs — autour du serveur `srv-tickets` |
+
+Les deux se répondent : le parcours développeur construit l'application, le parcours administrateur exploite
+le serveur qui l'héberge.
+
 ---
 
 ## 🗂️ Organisation du dépôt
@@ -65,6 +78,8 @@
 │       ├── Dockerfile                   # commenté étape par étape
 │       └── …                            # les sources de l'application
 ├── exercices/                           # énoncés et corrections
+│   ├── dev/                             # le parcours développeur, sans corrigé
+│   └── admin/                           # le parcours administrateur système, sans corrigé
 ├── exemple/                             # fichiers de travail pour les manipulations
 └── docker-compose.yml                   # base PostgreSQL de démonstration
 ```
