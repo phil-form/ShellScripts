@@ -115,10 +115,22 @@ chmod 700 script.sh
 chmod u=rwx,g=,o= script.sh
 ```
 
+
 | | Permissions |
 |---|---|
 | **Avant** | `-rwxr-xr-- 1 username usergroup 219K May 15  2020 script.sh` |
 | **Après** | `-rwx------ 1 username usergroup 219K May 15  2020 script.sh` |
+
+Cas particulier :
+Ajoute read à l'owner
+```bash
+chmod u+r script.sh
+```
+
+Retire write au groupe
+```bash
+chmod g-w script.sh
+```
 
 ### Exemple 2 — un fichier partagé avec son groupe
 
@@ -171,6 +183,11 @@ chmod -R 700 dossier/
 > find dossier/ -type d -exec chmod 700 {} +   # dossiers : besoin du x pour être traversés
 > find dossier/ -type f -exec chmod 600 {} +   # fichiers : pas de x
 > ```
+
+Ci dessous, je mets les droits 700 à tous les enfants contenu dans dossier/ mais pas au dossier.
+```bash
+chmod -R 700 dossier/*
+```
 
 ---
 
@@ -260,6 +277,14 @@ chown newusername file
 |---|---|
 | **Avant** | `-rw-rw-r-- 1 username    usergroup 219K May 15  2020 file` |
 | **Après** | `-rw-rw-r-- 1 newusername usergroup 219K May 15  2020 file` |
+
+```bash
+chown newusername:newgroup file
+```
+
+```bash
+chown -R newusername:newgroup directory/
+```
 
 ### Changer le groupe
 

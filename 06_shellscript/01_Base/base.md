@@ -109,6 +109,7 @@ NAME="Philippe"
 
 # Utilisation d'une variable
 echo "Bonjour !!!! $NAME"
+echo "Bonjour !!!! ${NAME}"
 ```
 
 > [!WARNING]
@@ -232,14 +233,14 @@ echo "${#RIGHTS[@]}"
 Exemple d'arguments :
 
 ```bash
-ls -la /home/dev
+myscript.sh -la /home/dev
 ```
 
 Ici les arguments sont :
 
 | Position | Valeur |
 |----------|--------|
-| `$0` | `ls` |
+| `$0` | `myscript.sh` |
 | `$1` | `-la` |
 | `$2` | `/home/dev` |
 

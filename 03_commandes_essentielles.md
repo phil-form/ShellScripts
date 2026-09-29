@@ -689,7 +689,7 @@ tar -cvf backup.tar /dossier
 ```text
 c => créer
 v => verbose (sortie détaillée)
-f => préciser dans quel fichier enregistrer l'archive
+f => préciser dans quel fichier enregistrer l'archive Doit être en dernière position
 ```
 
 ### Créer une archive compressée
