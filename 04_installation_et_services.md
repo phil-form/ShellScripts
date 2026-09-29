@@ -27,6 +27,8 @@ Deux grandes familles de distributions, deux gestionnaires de paquets :
 |---------|---------------|--------------|
 | **Debian** | Debian, Ubuntu, Mint, Raspberry Pi OS | `apt` |
 | **RedHat** | RHEL, CentOS, Fedora, Rocky, Alma | `yum` (ancien) / `dnf` (actuel) |
+| **Apline** | Alpine (habituellement avec docker)| `apk` |
+| **ArchLinux** | ArchLinux, Garuda, CatchyOS, Manjaro (jamais sur serveur !)| `pacman` |
 
 ### Préinstallation / mise à jour de l'index
 
@@ -175,6 +177,11 @@ sudo systemctl start service_name
 sudo systemctl status service_name
 ```
 
+Activer le service et le démarrer en mêmem temps
+```bash
+sudo systemctl enable --now service_name
+```
+
 > [!IMPORTANT]
 > `enable` ≠ `start`. `enable` programme le démarrage **au prochain boot**, `start` démarre **tout de suite**.
 > Pour faire les deux d'un coup : `sudo systemctl enable --now service_name`.
@@ -257,6 +264,7 @@ Description=Exemple de service
 After=multi-user.target
 
 [Service]
+SyslogIdentifier=identifierName
 Type=simple
 Restart=always
 RestartSec=1

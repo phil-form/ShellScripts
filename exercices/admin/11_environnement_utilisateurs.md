@@ -65,7 +65,7 @@
 6. `bigfiles [chemin]` — les 10 plus gros fichiers d'un chemin.
 7. `backup <fichier>` — copie horodatée d'un fichier avant modification. Pourquoi celle-ci **doit** être
    une fonction et non un alias ?
-8. Comment lancer la **vraie** commande `rm` en contournant votre alias sécurisé ?
+8. Comment lancer la **vraie** commande `rm` en ignorant votre alias sécurisé ?
 
 ---
 

@@ -76,8 +76,9 @@ Puis **dans l'autre sens** : traduisez en `rwx` les droits `640`, `750`, `775`, 
 3. **SUID** : pourquoi `/usr/bin/passwd` en a-t-il besoin ? Que se passerait-il sans ?
 4. Recherchez sur tout le système les fichiers portant le bit **SUID** *(indice : `find / -perm`)* et
    expliquez pourquoi cette liste est un **point d'audit** de sécurité.
-5. Posez le SUID sur une copie de `/bin/bash` dans `/tmp`, constatez le danger, puis **supprimez-la
-   immédiatement**. Qu'auriez-vous fait si vous aviez trouvé ce fichier sur un serveur en production ?
+5. Un audit révèle un fichier `/tmp/.bash` appartenant à root et portant le bit SUID. Pourquoi est-ce un
+   **indicateur de compromission** ? Quelle commande permet de détecter ce genre de fichier sur tout le
+   système, et quelle est votre réaction (isoler, conserver la preuve, enquêter) ?
 
 ---
 
@@ -110,4 +111,4 @@ Puis **dans l'autre sens** : traduisez en `rwx` les droits `640`, `750`, `775`, 
 - `/srv/projet` a le SGID **et** le sticky bit, et vous l'avez prouvé avec deux comptes.
 - `/srv/ticketflow` a des dossiers en `750` et des fichiers en `640` — pas l'inverse.
 - Vous savez produire la liste des binaires SUID de la machine et dire pourquoi on la surveille.
-- Aucune copie de shell SUID ne traîne dans `/tmp`.
+- Vous savez reconnaître un binaire SUID suspect et décrire votre réaction.

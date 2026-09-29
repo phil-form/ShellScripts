@@ -78,7 +78,8 @@ Un point à la fois, avec vérification de syntaxe et test entre chaque :
 3. Atteignez une seconde machine **via** le serveur (rebond).
 4. Ouvrez un tunnel **local** rendant la base PostgreSQL du serveur (qui n'écoute que sur `127.0.0.1`)
    joignable depuis votre poste sur le port 5433. Vérifiez avec un client.
-5. Ouvrez un proxy SOCKS et faites passer un navigateur par le serveur.
+5. Ouvrez un proxy SOCKS pour accéder depuis votre navigateur à une interface d'administration interne,
+   et expliquez pourquoi une politique d'entreprise peut interdire ce type de tunnel.
 6. Transférez un fichier avec `scp`, puis un dossier avec `rsync`. Pourquoi `rsync` dès que l'opération
    se répète ?
 7. `known_hosts` : que se passe-t-il si l'empreinte du serveur change ? Comment réagit-on **correctement**

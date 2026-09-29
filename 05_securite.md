@@ -754,15 +754,7 @@ test ALL=(devops) ALL, !/bin/rm
 `test` peut emprunter l'identité de `devops` pour toutes les commandes, sauf `rm`.
 
 > [!CAUTION]
-> **Les listes noires ne fonctionnent pas.** `!/bin/rm` se contourne en trois secondes :
->
-> ```bash
-> sudo -u devops cp /bin/rm /tmp/r && sudo -u devops /tmp/r fichier
-> sudo -u devops vim -c ':!rm fichier'
-> sudo -u devops find . -exec rm {} \;
-> ```
->
-> Toute commande capable de lancer un shell, de copier un binaire ou d'exécuter un programme arbitraire annule la restriction. **Utilisez toujours une liste blanche** de commandes explicites, et vérifiez qu'aucune ne permet d'évasion.
+> **Les listes noires ne fonctionnent pas.** Une règle comme `ALL, !/bin/rm` ne protège rien : toute commande autorisée capable de lancer un autre programme ou de copier un binaire annule la restriction. **Utilisez toujours une liste blanche** de commandes explicites, et limitez-la à des commandes qui ne permettent pas d'en lancer d'autres.
 
 ### Les tags
 
@@ -786,14 +778,6 @@ deploy ALL=(root) PASSWD:   /usr/bin/systemctl restart nginx
 > [!CAUTION]
 > **`NOPASSWD` est à utiliser avec parcimonie.** Chaque entrée est une porte ouverte si le compte est compromis : plus besoin de connaître le mot de passe pour élever ses privilèges.
 > Réservez-le à des commandes précises, non détournables, et typiquement à des comptes de service non interactifs. Un `NOPASSWD: ALL` équivaut à donner le mot de passe root.
-
-Le tag `NOEXEC` mérite d'être connu — il neutralise les évasions de shell sur les commandes qui en permettent :
-
-```text
-alice ALL=(root) NOEXEC: /usr/bin/less /var/log/secure
-```
-
-Sans lui, `less` permettrait `!sh` et donnerait un shell root.
 
 ### Les Defaults
 

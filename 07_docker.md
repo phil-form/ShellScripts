@@ -423,7 +423,7 @@ WORKDIR /app
 
 # 1.a · les dépendances — ici on installe TOUT,
 #       devDependencies comprises : on en a besoin pour compiler
-COPY package.json package-lock.json ./
+COPY package*.json ./
 RUN npm ci
 
 # 1.b · les sources
@@ -453,6 +453,11 @@ docker build -t demo:02 .
 # On peut aussi s'arrêter à une étape, pour l'inspecter ou déboguer
 docker build --target builder -t demo:02-builder .
 docker images | grep demo
+```
+
+Si vous avez plusieurs dockerfiles : 
+```shell
+docker build -f ./Path/To/Target/Dockerfile -t demo:02 .
 ```
 
 ```text
@@ -564,6 +569,23 @@ Quelques options utiles :
 docker build -t mon-app:1.0 --no-cache .            # ignorer le cache
 docker build -t mon-app:1.0 --target builder .      # s'arrêter à une étape
 docker build -t mon-app:1.0 --build-arg VERSION=2 . # passer un ARG
+```
+
+```dockerfile
+FROM golang:1.23-alpine AS builder
+WORKDIR /src
+COPY go.mod ./
+RUN go mod download
+COPY . .
+# CGO_ENABLED=0    → binaire statique, sans dépendance à la libc
+# -ldflags "-s -w" → sans table des symboles : binaire plus petit
+RUN CGO_ENABLED=0 go build -trimpath -ldflags="-s -w" -o /out/serveur ./main.go
+RUN echo $EXTERAL_ARG
+
+FROM scratch
+COPY --from=builder /out/serveur /serveur
+USER 65534:65534
+ENTRYPOINT ["/serveur"]
 ```
 
 > [!TIP]

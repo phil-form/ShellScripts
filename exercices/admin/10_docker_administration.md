@@ -21,8 +21,9 @@
 3. Quelle version du démon, quelle version du client ? Le démon tourne-t-il en `root` ?
 4. Quel service systemd le pilote ? Où sont ses logs ?
 5. Qui, sur cette machine, peut parler au démon Docker ? Pourquoi appartenir au groupe `docker`
-   équivaut-il **de fait** à être root sur l'hôte ? Démontrez-le en une commande — puis réfléchissez à ce que
-   cela implique pour la règle `sudo` de vos développeurs *(chapitre [A6](06_acl_et_sudo.md))*.
+   équivaut-il **de fait** à être root sur l'hôte ? Expliquez le principe, listez les membres du groupe
+   `docker`, puis réfléchissez à ce que cela implique pour la gestion des accès et la règle `sudo` de vos
+   développeurs *(chapitre [A6](06_acl_et_sudo.md))*.
 
 ---
 

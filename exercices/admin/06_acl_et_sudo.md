@@ -101,7 +101,8 @@ Cahier des charges pour `/srv/projet` :
 
 ### Exercice 6.8 — Les pièges
 
-Pour chacun de ces exemples, expliquez **pourquoi la règle est dangereuse** et proposez une version correcte :
+Pour chacun de ces exemples, expliquez **le principe du risque** (par exemple : un programme capable de
+lancer d'autres commandes) **sans le reproduire**, et proposez une version correcte :
 
 1. `bob ALL=(ALL) NOPASSWD: /usr/bin/vim`
 2. `%dev ALL=(ALL) NOPASSWD: /bin/chmod`

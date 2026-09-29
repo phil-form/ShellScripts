@@ -601,13 +601,13 @@ find . -name "*.md" | xargs -I {} cp {} /tmp/sauvegarde/
 | `-size +10M` / `-size -1k` | Plus grand que / plus petit que |
 | `-mtime -2` | Modifié il y a moins de 2 jours (`-mmin -30` : 30 minutes) |
 | `-user debian` | Appartenant à un utilisateur |
-| `-perm -4000` | Avec un bit de permission donné (ici SUID) |
+| `-perm -750` | Avec un bit de permission donné (ici rwxr-x---) |
 | `-maxdepth 2` | Limiter la profondeur de recherche |
 | `-delete` / `-exec … \;` / `-exec … +` | Agir sur les résultats |
 
 ---
 
-## Analyse de l'espace disque — `du` et `df`
+## Analyse de l'espace disque — `lsblk`, `du` et `df`
 
 ### `du` — ce que **consomment** les dossiers
 
@@ -689,7 +689,7 @@ tar -cvf backup.tar /dossier
 ```text
 c => créer
 v => verbose (sortie détaillée)
-f => préciser dans quel fichier enregistrer l'archive
+f => préciser dans quel fichier enregistrer l'archive Doit être en dernière position
 ```
 
 ### Créer une archive compressée

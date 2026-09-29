@@ -50,12 +50,23 @@ RIGHTS=("ADMIN" "NETWORK" "DEV")
 
 for right in "${RIGHTS[@]}"
 do
-  echo "Droit : $right"
+  echo "Droit : ${right}"
 done
 ```
 
+```bash
+NEW_FILE_NAMES=("ADMIN" "NETWORK" "DEV")
+
+for new_file in "${NEW_FILE_NAMES[@]}"
+do
+  touch "${new_file}_$(date)"
+done
+```
+
+
 ### Parcourir une plage de nombres
 
+borne suppérieur et inférieur inclue
 ```bash
 for i in {1..5}
 do
@@ -80,10 +91,10 @@ done
 for file in ./*
 do
   echo "backing up $file"
-  if [ -f "$file.1" ]; then
-    mv "$file.1" "$file.2"
+  if [ -f "${file}.1" ]; then
+    mv "${file}.1" "${file}.2"
   fi
-  cp "$file" "$file.1"
+  cp "$file" "${file}.1"
 done
 ```
 
